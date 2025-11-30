@@ -1,13 +1,10 @@
-import fetch from "node-fetch";
-
 export async function handler(event, context) {
     const { start, end } = event.queryStringParameters;
 
-    const url =
-        `http://openAPI.seoul.go.kr:8088/네-API키/json/SeoulPublicLibraryInfo/${start}/${end}`;
+    const url = `http://openAPI.seoul.go.kr:8088/너의API키/json/SeoulPublicLibraryInfo/${start}/${end}`;
 
     try {
-        const response = await fetch(url);
+        const response = await fetch(url);  // Node18+ 내장 fetch
         const data = await response.json();
 
         return {
