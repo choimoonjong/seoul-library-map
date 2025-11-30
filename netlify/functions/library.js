@@ -1,7 +1,7 @@
 export async function handler(event, context) {
     const { start, end } = event.queryStringParameters;
 
-    const url = `http://openAPI.seoul.go.kr:8088/너의API키/json/SeoulPublicLibraryInfo/${start}/${end}`;
+    const url = `http://openAPI.seoul.go.kr:8088/4749635377646f6f34316344624e4b/json/SeoulPublicLibraryInfo/${start}/${end}`;
 
     try {
         const response = await fetch(url);  // Node18+ 내장 fetch
