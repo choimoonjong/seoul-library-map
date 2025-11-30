@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="utf-8">
     <title>서울시 공공도서관 정보조회 서비스</title>
@@ -9,10 +8,31 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="apple-touch-icon" sizes="180x180" href="images/logo1.png" />
-<link rel="icon" type="image/png" href="images/logo1.png" sizes="192x192"/>
-
+    <link rel="icon" type="image/png" href="images/logo1.png" sizes="192x192"/>
 
     <style>
+        /* =============== 인트로 화면 =============== */
+        #introScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #E5B167;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        #introScreen img {
+            width: 90%;
+            max-width: 500px;
+            object-fit: contain;
+        }
+
+        /* =============== 기존 스타일 =============== */
         .custom-bg-even { background-color: #F7BE81; }
         .custom-bg-odd { background-color: #FAFAD2; }
 
@@ -33,70 +53,85 @@
 </head>
 
 <body>
-    <div class="container mt-3">
 
-        <!-- 상단 제목 -->
-        <nav class="navbar bg-light mb-2">
-            <div class="container-fluid centered-div">
-                <h3><b>서울시 공공도서관 정보조회 서비스</b></h3>
-            </div>
-        </nav>
+    <!-- 🔥 인트로 전체화면 영역 -->
+    <div id="introScreen" onclick="closeIntro()">
+        <img src="images/fg_txt.png">
+    </div>
 
-        <!-- SELECT -->
-        <select id="gu" class="form-select mb-2">
-            <option value="강남구">강남구</option>
-            <option value="강동구">강동구</option>
-            <option value="강북구">강북구</option>
-            <option value="강서구">강서구</option>
-            <option value="관악구">관악구</option>
-            <option value="광진구">광진구</option>
-            <option value="구로구">구로구</option>
-            <option value="금천구">금천구</option>
-            <option value="노원구">노원구</option>
-            <option value="도봉구">도봉구</option>
-            <option value="동대문구">동대문구</option>
-            <option value="동작구">동작구</option>
-            <option value="마포구">마포구</option>
-            <option value="서대문구">서대문구</option>
-            <option value="서초구">서초구</option>
-            <option value="성동구">성동구</option>
-            <option value="성북구">성북구</option>
-            <option value="송파구">송파구</option>
-            <option value="양천구">양천구</option>
-            <option value="영등포구">영등포구</option>
-            <option value="용산구">용산구</option>
-            <option value="은평구">은평구</option>
-            <option value="종로구">종로구</option>
-            <option value="중구">중구</option>
-            <option value="중랑구">중랑구</option>
-        </select>
+    <!-- 🔥 실제 본문: 처음엔 숨김 -->
+    <div id="mainContent" style="display: none;">
+        <div class="container mt-3">
 
-        <div class="text-center mb-2">
-            <button id="searchBtn" class="btn btn-primary">검색</button>
-        </div>
-
-        <!-- 지도 + 목록 2단 구성 -->
-        <div class="container">
-            <div class="row mt-2">
-                <div class="col-lg-6 mt-2">
-                    <div id="map" style="height: 400px;"></div>
+            <!-- 상단 제목 -->
+            <nav class="navbar bg-light mb-2">
+                <div class="container-fluid centered-div">
+                    <h3><b>서울시 공공도서관 정보조회 서비스</b></h3>
                 </div>
-                <div class="col-lg-6 mt-2">
-                    <div id="libraries"></div>
+            </nav>
+
+            <!-- SELECT -->
+            <select id="gu" class="form-select mb-2">
+                <option value="강남구">강남구</option>
+                <option value="강동구">강동구</option>
+                <option value="강북구">강북구</option>
+                <option value="강서구">강서구</option>
+                <option value="관악구">관악구</option>
+                <option value="광진구">광진구</option>
+                <option value="구로구">구로구</option>
+                <option value="금천구">금천구</option>
+                <option value="노원구">노원구</option>
+                <option value="도봉구">도봉구</option>
+                <option value="동대문구">동대문구</option>
+                <option value="동작구">동작구</option>
+                <option value="마포구">마포구</option>
+                <option value="서대문구">서대문구</option>
+                <option value="서초구">서초구</option>
+                <option value="성동구">성동구</option>
+                <option value="성북구">성북구</option>
+                <option value="송파구">송파구</option>
+                <option value="양천구">양천구</option>
+                <option value="영등포구">영등포구</option>
+                <option value="용산구">용산구</option>
+                <option value="은평구">은평구</option>
+                <option value="종로구">종로구</option>
+                <option value="중구">중구</option>
+                <option value="중랑구">중랑구</option>
+            </select>
+
+            <div class="text-center mb-2">
+                <button id="searchBtn" class="btn btn-primary">검색</button>
+            </div>
+
+            <!-- 지도 + 목록 -->
+            <div class="container">
+                <div class="row mt-2">
+                    <div class="col-lg-6 mt-2">
+                        <div id="map" style="height: 400px;"></div>
+                    </div>
+                    <div class="col-lg-6 mt-2">
+                        <div id="libraries"></div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- 🆙 맨 위로 버튼 -->
-        <div class="centered-div">
-            <img id="toTop" src="images/up-arrow-icon.png" onclick="go_top()">
+            <!-- 맨 위로 -->
+            <div class="centered-div">
+                <img id="toTop" src="images/up-arrow-icon.png" onclick="go_top()">
+            </div>
         </div>
-
     </div>
 
     <!-- Kakao Map -->
     <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=8382196ca251c7706e3b7e1df97883e7&libraries=services"></script>
-
     <script src="script.js"></script>
+
+    <script>
+        function closeIntro() {
+            document.getElementById('introScreen').style.display = "none";
+            document.getElementById('mainContent').style.display = "block";
+        }
+    </script>
+
 </body>
 </html>
